@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Birkett Oliver — Photography</title>
+  <meta name="description" content="Oliver Birkett — photographer based in London." />
+
+  <style>
+    /* ═══════════════════════════════════════
+       TOKENS
+    ═══════════════════════════════════════ */
+    :root {
+      --black: #0c0c0c;
+      --white: #f0efeb;
+      --grey:  #666;
+      --gap:   3px;
+    }
+
+    /* ═══════════════════════════════════════
+       BASE
+    ═══════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 13px;
+      letter-spacing: .04em;
+      cursor: none;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; width: 100%; object-fit: cover; }
+
+    /* ═══════════════════════════════════════
+       CURSOR
+    ═══════════════════════════════════════ */
+    #cur {
+      position: fixed;
+      width: 8px; height: 8px;
+      background: var(--white);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: width .18s, height .18s;
+      mix-blend-mode: difference;
+    }
+    #cur.big { width: 44px; height: 44px; }
+
+    /* ═══════════════════════════════════════
+       HEADER
+    ═══════════════════════════════════════ */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.4rem 2rem;
+      mix-blend-mode: difference;
+    }
+    .logo {
+      display: block;
+      height: 28px;
+      width: auto;
+    }
+    .nav-contact {
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      border: 1px solid rgba(240,239,235,.35);
+      padding: .45rem 1.1rem;
+      border-radius: 100px;
+      color: var(--white);
+      transition: background .2s, color .2s;
+    }
+    .nav-contact:hover {
+      background: var(--white);
+      color: var(--black);
+    }
+
+    /* ═══════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════ */
+    #hero {
+      position: relative;
+      height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: var(--black);
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('images/DSC09794.jpg');
+      background-size: cover;
+      background-position: center 30%;
+      opacity: .55;
+      transform: scale(1.04);
+      transition: transform 10s ease, opacity 1.2s ease;
+    }
+    #hero.loaded .hero-bg { transform: scale(1); opacity: .65; }
+    .hero-center {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+    .hero-logo {
+      width: min(480px, 72vw);
+      filter: drop-shadow(0 2px 24px rgba(0,0,0,.6));
+    }
+    .hero-tagline {
+      margin-top: 1.4rem;
+      font-size: 11px;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: rgba(240,239,235,.5);
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: rgba(240,239,235,.3);
+      animation: bob 2.4s ease-in-out infinite;
+    }
+    @keyframes bob {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50%      { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ═══════════════════════════════════════
+       MARQUEE
+    ═══════════════════════════════════════ */
+    .marquee-wrap {
+      border-top: 1px solid #1e1e1e;
+      border-bottom: 1px solid #1e1e1e;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: .8rem 0;
+    }
+    .marquee-track {
+      display: inline-flex;
+      animation: scroll 30s linear infinite;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    .marquee-item {
+      font-size: 10px;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--grey);
+      padding: 0 2.4rem;
+    }
+    .marquee-dot { color: #333; padding: 0 .3rem; }
+    @keyframes scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ═══════════════════════════════════════
+       GALLERY  — 3-col masonry-style, no gaps
+    ═══════════════════════════════════════ */
+    #work { padding-top: var(--gap); }
+
+    .gallery {
+      columns: 3;
+      column-gap: var(--gap);
+      padding: 0 var(--gap) var(--gap);
+    }
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: var(--gap);
+      overflow: hidden;
+      position: relative;
+      display: block;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform .6s cubic-bezier(.22,.61,.36,1);
+    }
+    .gallery-item:hover img { transform: scale(1.04); }
+
+    /* loading skeleton */
+    .gallery-item img[data-src] {
+      background: #181818;
+      min-height: 200px;
+    }
+
+    @media (max-width: 700px) {
+      .gallery { columns: 2; }
+    }
+    @media (max-width: 420px) {
+      .gallery { columns: 1; }
+    }
+
+    /* ═══════════════════════════════════════
+       CONTACT
+    ═══════════════════════════════════════ */
+    #contact {
+      border-top: 1px solid #1e1e1e;
+      padding: 5rem 2rem 4rem;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    #contact h2 {
+      font-size: 10px;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 2.5rem;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: .4rem;
+    }
+    .form-field.full { grid-column: 1 / -1; }
+    label {
+      font-size: 10px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+    input, textarea {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid #2a2a2a;
+      color: var(--white);
+      font-family: inherit;
+      font-size: 13px;
+      padding: .6rem 0;
+      outline: none;
+      transition: border-color .2s;
+      width: 100%;
+      resize: none;
+    }
+    input:focus, textarea:focus { border-color: var(--white); }
+    textarea { min-height: 100px; }
+
+    /* honeypot */
+    .hp { display: none; }
+
+    .submit-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .btn-submit {
+      background: var(--white);
+      color: var(--black);
+      border: none;
+      padding: .75rem 2.2rem;
+      font-family: inherit;
+      font-size: 11px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      cursor: none;
+      border-radius: 100px;
+      transition: opacity .2s;
+    }
+    .btn-submit:hover { opacity: .8; }
+    #form-msg {
+      font-size: 11px;
+      letter-spacing: .1em;
+      color: var(--grey);
+    }
+
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
+    footer {
+      border-top: 1px solid #1a1a1a;
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-copy {
+      font-size: 10px;
+      letter-spacing: .12em;
+      color: #333;
+    }
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+    .footer-links a { transition: color .2s; }
+    .footer-links a:hover { color: var(--white); }
+  </style>
+</head>
+<body>
+
+  <div id="cur"></div>
+
+  <!-- ── HEADER ── -->
+  <header>
+    <a href="/" aria-label="Birkett Oliver home">
+      <img class="logo" src="images/BIRKETT-OLIVER-CHROME-transparent.png" alt="Birkett Oliver" />
+    </a>
+    <a class="nav-contact" href="#contact">Contact</a>
+  </header>
+
+  <!-- ── HERO ── -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-center">
+      <img class="hero-logo" src="images/BIRKETT-OLIVER-CHROME-transparent.png" alt="Birkett Oliver" />
+      <p class="hero-tagline">Photographer · London</p>
+    </div>
+    <span class="hero-scroll" aria-hidden="true">↓ scroll</span>
+  </section>
+
+  <!-- ── MARQUEE ──
+       SWAP: edit client names here (keep both halves identical for seamless loop) -->
+  <div class="marquee-wrap" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="marquee-item">Editorial<span class="marquee-dot">·</span></span>
+      <span class="marquee-item">Fashion<span class="marquee-dot">·</span></span>
+      <span class="marquee-item">Portrait<span class="marquee-dot">·</span></span>
+      <span class="marquee-item">Commercial<span class="marquee-dot">·</span></span>
+      <span class="marquee-item">Lifestyle<span class="marquee-dot">·</span></span>
+      <span class="marquee-item">London<span class="marquee-dot">·</span></span>
+      <span class="marquee-item">Editorial<span class="marquee-dot">·</span></span>
+      <span class="marquee-item">Fashion<span class="marquee-dot">·</span></span>
+      <span class="marquee-item">Portrait<span class="marquee-dot">·</span></span>
+      <span class="marquee-item">Commercial<span class="marquee-dot">·</span></span>
+      <span class="marquee-item">Lifestyle<span class="marquee-dot">·</span></span>
+      <span class="marquee-item">London<span class="marquee-dot">·</span></span>
+    </div>
+  </div>
+
+  <!-- ── GALLERY ── (populated from photos.json via JS) -->
+  <section id="work">
+    <div class="gallery" id="gallery"></div>
+  </section>
+
+  <!-- ── CONTACT ── -->
+  <section id="contact">
+    <h2>Get in touch</h2>
+    <!--
+      Web3Forms: replace ACCESS_KEY below with Oliver's key from web3forms.com
+      SWAP EMAIL: also set the email on the hidden input below
+    -->
+    <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="REPLACE_WITH_WEB3FORMS_KEY" />
+      <!-- ── SWAP: Oliver's email ── -->
+      <input type="hidden" name="from_name" value="Birkett Oliver Website" />
+      <input type="hidden" name="subject" value="New enquiry via birkettoliverphoto.com" />
+      <input type="hidden" name="redirect" value="false" />
+      <!-- honeypot -->
+      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" />
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="fname">Name</label>
+          <input type="text" id="fname" name="name" required autocomplete="name" />
+        </div>
+        <div class="form-field">
+          <label for="femail">Email</label>
+          <input type="email" id="femail" name="email" required autocomplete="email" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field full">
+          <label for="fsubject">Subject</label>
+          <input type="text" id="fsubject" name="subject_line" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field full">
+          <label for="fmessage">Message</label>
+          <textarea id="fmessage" name="message" required></textarea>
+        </div>
+      </div>
+      <div class="submit-row">
+        <button type="submit" class="btn-submit">Send</button>
+        <span id="form-msg"></span>
+      </div>
+    </form>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <span class="footer-copy">© 2024 Oliver Birkett. All rights reserved.</span>
+    <nav class="footer-links">
+      <!-- ── SWAP: Oliver's Instagram / socials ── -->
+      <a href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a>
+      <a href="mailto:jackjosephmcgowan@gmail.com">Email</a><!-- ── SWAP email ── -->
+    </nav>
+  </footer>
+
+  <!-- ══════════════════════════════════════
+       JAVASCRIPT
+  ══════════════════════════════════════ -->
+  <script>
+    /* ── cursor ── */
+    const cur = document.getElementById('cur');
+    document.addEventListener('mousemove', e => {
+      cur.style.left = e.clientX + 'px';
+      cur.style.top  = e.clientY + 'px';
+    });
+    document.querySelectorAll('a, button, .gallery-item').forEach(el => {
+      el.addEventListener('mouseenter', () => cur.classList.add('big'));
+      el.addEventListener('mouseleave', () => cur.classList.remove('big'));
+    });
+
+    /* ── hero load animation ── */
+    window.addEventListener('load', () => {
+      document.getElementById('hero').classList.add('loaded');
+    });
+
+    /* ── build gallery from photos.json ── */
+    const gallery = document.getElementById('gallery');
+
+    fetch('photos.json')
+      .then(r => r.json())
+      .then(data => {
+        data.photos.forEach(p => {
+          const item = document.createElement('div');
+          item.className = 'gallery-item';
+          const img = document.createElement('img');
+          img.src = p.file;
+          img.alt = p.alt || '';
+          img.loading = 'lazy';
+          item.appendChild(img);
+          gallery.appendChild(item);
+
+          /* hover cursor */
+          item.addEventListener('mouseenter', () => cur.classList.add('big'));
+          item.addEventListener('mouseleave', () => cur.classList.remove('big'));
+        });
+      })
+      .catch(() => {
+        gallery.innerHTML = '<p style="color:#444;padding:2rem;font-size:12px;letter-spacing:.1em">No photos found. Add images via the admin panel.</p>';
+      });
+
+    /* ── contact form ── */
+    const form = document.getElementById('contact-form');
+    const msg  = document.getElementById('form-msg');
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const btn = form.querySelector('.btn-submit');
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+
+      try {
+        const res  = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: new FormData(form),
+        });
+        const data = await res.json();
+        if (data.success) {
+          msg.textContent = 'Message sent. Thank you.';
+          form.reset();
+        } else {
+          msg.textContent = 'Something went wrong — please try again.';
+        }
+      } catch {
+        msg.textContent = 'Network error — please try again.';
+      } finally {
+        btn.textContent = 'Send';
+        btn.disabled = false;
+      }
+    });
+  </script>
+
+</body>
+</html>

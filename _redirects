@@ -1,7 +1,1 @@
-# Cloudflare Pages redirects
-
-# Force www
 http://birkettoliverphoto.com/* https://www.birkettoliverphoto.com/:splat 301
-
-# SPA fallback (not needed but harmless)
-/* /index.html 200

@@ -1,12 +1,65 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Birkett Oliver — Admin</title>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-</head>
-<body>
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-</body>
-</html>
+# ─────────────────────────────────────────────────────────────
+#  Decap CMS config for Birkett Oliver Photography
+#  OAuth is handled by Netlify — site is hosted on Cloudflare Pages
+# ─────────────────────────────────────────────────────────────
+
+backend:
+  name: github
+  repo: jack-mcg0wan/birkett-oliver-photo   # SWAP: your-github-username/your-repo-name
+  branch: main
+  base_url: https://api.netlify.com          # Netlify handles OAuth
+  auth_endpoint: auth
+
+# Where uploaded images get stored in the repo
+media_folder: "images"
+public_folder: "images"
+
+collections:
+  # ── GALLERY ──────────────────────────────────────────────
+  - name: "gallery"
+    label: "Gallery"
+    files:
+      - name: "photos"
+        label: "Photo List"
+        file: "photos.json"
+        description: "Add, remove, or reorder photos. Changes go live after saving."
+        fields:
+          - label: "Photos"
+            name: "photos"
+            widget: "list"
+            summary: "{{fields.alt}}"
+            fields:
+              - label: "Image"
+                name: "file"
+                widget: "image"
+                hint: "Upload a new photo or choose an existing one"
+              - label: "Caption / Alt text"
+                name: "alt"
+                widget: "string"
+                hint: "Brief description (used for accessibility)"
+                required: false
+
+  # ── SITE SETTINGS ────────────────────────────────────────
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - name: "site"
+        label: "General"
+        file: "settings.json"
+        fields:
+          - label: "Tagline (under hero logo)"
+            name: "tagline"
+            widget: "string"
+            default: "Photographer · London"
+          - label: "Contact email"
+            name: "email"
+            widget: "string"
+          - label: "Instagram URL"
+            name: "instagram"
+            widget: "string"
+            required: false
+          - label: "Marquee text (comma-separated)"
+            name: "marquee"
+            widget: "string"
+            default: "Editorial, Fashion, Portrait, Commercial, Lifestyle, London"
+            hint: "Items separated by commas"

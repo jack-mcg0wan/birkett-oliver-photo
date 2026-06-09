@@ -26,6 +26,7 @@
       background: var(--black);
       color: var(--white);
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-weight: bold;
       font-size: 13px;
       letter-spacing: .04em;
       cursor: none;
@@ -118,21 +119,7 @@
       text-transform: uppercase;
       color: rgba(240,239,235,.85);
     }
-    .hero-scroll {
-      position: absolute;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 10px;
-      letter-spacing: .25em;
-      text-transform: uppercase;
-      color: rgba(240,239,235,.3);
-      animation: bob 2.4s ease-in-out infinite;
-    }
-    @keyframes bob {
-      0%,100% { transform: translateX(-50%) translateY(0); }
-      50%      { transform: translateX(-50%) translateY(6px); }
-    }
+    .hero-scroll { display: none; }
 
     /* ═══════════════════════════════════════
        MARQUEE
@@ -316,9 +303,6 @@
 
   <!-- ── HEADER ── -->
   <header>
-    <a href="/" aria-label="Birkett Oliver home">
-      <img class="logo" src="assets/logo-birkett-oliver.png" alt="Birkett Oliver" />
-    </a>
     <a class="nav-contact" href="#contact">Contact</a>
   </header>
 
@@ -327,7 +311,7 @@
     <div class="hero-bg"></div>
     <div class="hero-center">
       <img class="hero-logo" src="assets/logo-birkett-oliver.png" alt="Birkett Oliver" />
-      <p class="hero-tagline">Photographer · London</p>
+      <p class="hero-tagline">Photographer Based in London</p>
     </div>
     <span class="hero-scroll" aria-hidden="true">↓ scroll</span>
   </section>

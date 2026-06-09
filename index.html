@@ -68,8 +68,11 @@
     }
     .logo {
       display: block;
-      height: 60px;
+      height: 88px;
       width: auto;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
       filter: none;
     }
     .nav-contact {
@@ -107,8 +110,8 @@
       text-align: center;
     }
     .hero-logo {
-      width: min(870px, 90vw);
-      max-height: 240px;
+      width: min(435px, 60vw);
+      max-height: 120px;
       object-fit: contain;
       filter: none;
     }
@@ -118,6 +121,12 @@
       letter-spacing: .35em;
       text-transform: uppercase;
       color: rgba(240,239,235,.85);
+      display: inline-block;
+      padding-bottom: .6rem;
+      background: linear-gradient(to right, transparent, rgba(240,239,235,.4) 20%, rgba(240,239,235,.4) 80%, transparent);
+      background-size: 100% 1px;
+      background-repeat: no-repeat;
+      background-position: bottom;
     }
     .hero-scroll { display: none; }
 

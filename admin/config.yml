@@ -1,13 +1,13 @@
 # ─────────────────────────────────────────────────────────────
 #  Decap CMS config for Birkett Oliver Photography
-#  OAuth is handled by Netlify — site is hosted on Cloudflare Pages
+#  OAuth is handled by Cloudflare Worker
 # ─────────────────────────────────────────────────────────────
 
 backend:
   name: github
-  repo: jack-mcg0wan/birkett-oliver-photo   # SWAP: your-github-username/your-repo-name
+  repo: jack-mcg0wan/birkett-oliver-photo
   branch: main
-  base_url: https://api.netlify.com          # Netlify handles OAuth
+  base_url: https://birkett-oliver-oauth.jackjosephmcgowan.workers.dev
   auth_endpoint: auth
 
 # Where uploaded images get stored in the repo

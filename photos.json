@@ -1,18 +1,60 @@
 {
   "photos": [
-    { "file": "images/3.jpg", "alt": "Portrait" },
-    { "file": "images/5.jpg", "alt": "Portrait" },
-    { "file": "images/6.jpg", "alt": "Portrait" },
-    { "file": "images/collage-02-02.png", "alt": "Collage" },
-    { "file": "images/DSC00021.jpg", "alt": "Portrait" },
-    { "file": "images/DSC07005.jpg", "alt": "Portrait" },
-    { "file": "images/DSC08273.jpg", "alt": "Portrait" },
-    { "file": "images/DSC09794.jpg", "alt": "Portrait" },
-    { "file": "images/DSCF8753.jpg", "alt": "BMW interior" },
-    { "file": "images/DSCF8836.jpg", "alt": "Portrait" },
-    { "file": "images/SHOTBY-BIRKETTOLIVER-00891-3.jpg", "alt": "Portrait" },
-    { "file": "images/SHOTBY-BIRKETTOLIVER-00895.jpg", "alt": "Portrait" },
-    { "file": "images/SHOTBY-BIRKETTOLIVER-01097.jpg", "alt": "Portrait" },
-    { "file": "images/Untitled-2.jpg", "alt": "Portrait" }
+    {
+      "file": "images/5.jpg",
+      "alt": "Portrait"
+    },
+    {
+      "file": "images/3.jpg",
+      "alt": "Portrait"
+    },
+    {
+      "file": "images/6.jpg",
+      "alt": "Portrait"
+    },
+    {
+      "file": "images/collage-02-02.png",
+      "alt": "Collage"
+    },
+    {
+      "file": "images/DSC00021.jpg",
+      "alt": "Portrait"
+    },
+    {
+      "file": "images/DSC07005.jpg",
+      "alt": "Portrait"
+    },
+    {
+      "file": "images/DSC08273.jpg",
+      "alt": "Portrait"
+    },
+    {
+      "file": "images/DSC09794.jpg",
+      "alt": "Portrait"
+    },
+    {
+      "file": "images/DSCF8753.jpg",
+      "alt": "BMW interior"
+    },
+    {
+      "file": "images/DSCF8836.jpg",
+      "alt": "Portrait"
+    },
+    {
+      "file": "images/SHOTBY-BIRKETTOLIVER-00891-3.jpg",
+      "alt": "Portrait"
+    },
+    {
+      "file": "images/SHOTBY-BIRKETTOLIVER-00895.jpg",
+      "alt": "Portrait"
+    },
+    {
+      "file": "images/SHOTBY-BIRKETTOLIVER-01097.jpg",
+      "alt": "Portrait"
+    },
+    {
+      "file": "images/Untitled-2.jpg",
+      "alt": "Portrait"
+    }
   ]
 }

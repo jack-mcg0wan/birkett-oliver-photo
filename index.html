@@ -292,8 +292,8 @@
 
   <!-- ── HEADER ── -->
   <header>
-    <a class="logo" href="/" aria-label="Birkett Oliver home">
-      <img src="assets/BIRKETT-OLIVER.png" alt="Birkett Oliver" />
+    <a href="/" aria-label="Birkett Oliver home">
+      <img class="logo" src="assets/BIRKETT-OLIVER.png" alt="Birkett Oliver" />
     </a>
     <a class="nav-contact" href="#contact">Contact</a>
   </header>
@@ -378,11 +378,13 @@
 
     /* ── build gallery from photos.json ── */
     const gallery = document.getElementById('gallery');
+    const isMobile = window.innerWidth <= 700;
 
     fetch('photos.json')
       .then(r => r.json())
       .then(data => {
-        data.photos.forEach(p => {
+        const list = isMobile && data.photos_mobile ? data.photos_mobile : data.photos;
+        list.forEach(p => {
           const item = document.createElement('div');
           item.className = 'gallery-item';
           const img = document.createElement('img');

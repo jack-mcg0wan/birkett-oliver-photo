@@ -10,12 +10,10 @@ backend:
   base_url: https://birkett-oliver-oauth.jackjosephmcgowan.workers.dev
   auth_endpoint: auth
 
-# Where uploaded images get stored in the repo
 media_folder: "images"
 public_folder: "images"
 
 collections:
-  # ── GALLERY ──────────────────────────────────────────────
   - name: "gallery"
     label: "Gallery"
     files:
@@ -24,7 +22,7 @@ collections:
         file: "photos.json"
         description: "Add, remove, or reorder photos. Changes go live after saving."
         fields:
-          - label: "Photos"
+          - label: "Desktop Photos"
             name: "photos"
             widget: "list"
             summary: "{{fields.alt}}"
@@ -38,8 +36,21 @@ collections:
                 widget: "string"
                 hint: "Brief description (used for accessibility)"
                 required: false
+          - label: "Mobile Photos"
+            name: "photos_mobile"
+            widget: "list"
+            summary: "{{fields.alt}}"
+            fields:
+              - label: "Image"
+                name: "file"
+                widget: "image"
+                hint: "Upload a new photo or choose an existing one"
+              - label: "Caption / Alt text"
+                name: "alt"
+                widget: "string"
+                hint: "Brief description (used for accessibility)"
+                required: false
 
-  # ── SITE SETTINGS ────────────────────────────────────────
   - name: "settings"
     label: "Site Settings"
     files:

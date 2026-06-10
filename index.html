@@ -29,26 +29,9 @@
       font-weight: bold;
       font-size: 13px;
       letter-spacing: .04em;
-      cursor: none;
     }
     a { color: inherit; text-decoration: none; }
     img { display: block; width: 100%; object-fit: cover; }
-
-    /* ═══════════════════════════════════════
-       CURSOR
-    ═══════════════════════════════════════ */
-    #cur {
-      position: fixed;
-      width: 8px; height: 8px;
-      background: var(--white);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%,-50%);
-      transition: width .18s, height .18s;
-      mix-blend-mode: difference;
-    }
-    #cur.big { width: 44px; height: 44px; }
 
     /* ═══════════════════════════════════════
        HEADER
@@ -186,9 +169,7 @@
 
     @media (max-width: 700px) {
       .gallery { columns: 2; }
-    }
-    @media (max-width: 420px) {
-      .gallery { columns: 1; }
+      .hero-logo { width: min(600px, 75vw); }
     }
 
     /* ═══════════════════════════════════════
@@ -261,7 +242,6 @@
       font-size: 11px;
       letter-spacing: .2em;
       text-transform: uppercase;
-      cursor: none;
       border-radius: 100px;
       transition: opacity .2s;
     }
@@ -302,8 +282,6 @@
   </style>
 </head>
 <body>
-
-  <div id="cur"></div>
 
   <!-- ── HEADER ── -->
   <header>
@@ -386,17 +364,6 @@
        JAVASCRIPT
   ══════════════════════════════════════ -->
   <script>
-    /* ── cursor ── */
-    const cur = document.getElementById('cur');
-    document.addEventListener('mousemove', e => {
-      cur.style.left = e.clientX + 'px';
-      cur.style.top  = e.clientY + 'px';
-    });
-    document.querySelectorAll('a, button, .gallery-item').forEach(el => {
-      el.addEventListener('mouseenter', () => cur.classList.add('big'));
-      el.addEventListener('mouseleave', () => cur.classList.remove('big'));
-    });
-
     /* ── hero load animation ── */
     window.addEventListener('load', () => {
       document.getElementById('hero').classList.add('loaded');
@@ -417,10 +384,6 @@
           img.loading = 'lazy';
           item.appendChild(img);
           gallery.appendChild(item);
-
-          /* hover cursor */
-          item.addEventListener('mouseenter', () => cur.classList.add('big'));
-          item.addEventListener('mouseleave', () => cur.classList.remove('big'));
         });
       })
       .catch(() => {

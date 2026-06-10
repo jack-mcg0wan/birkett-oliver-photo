@@ -1,7 +1,7 @@
 {
   "photos": [
     {
-      "file": "images/SHOTBY-BIRKETTOLIVER-00895.jpg",
+      "file": "images/shotby-birkettoliver-00895-5.jpg",
       "alt": "Portrait"
     },
     {
@@ -55,6 +55,12 @@
     {
       "file": "images/Untitled-2.jpg",
       "alt": "Portrait"
+    },
+    {
+      "file": "images/shotby-birkettoliver-00996-2.jpg"
+    },
+    {
+      "file": "images/shotby-birkettoliver-01247-3.jpg"
     }
   ],
   "photos_mobile": [

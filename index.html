@@ -57,9 +57,11 @@
     .logo {
       display: flex;
       align-items: center;
+    }
+    .logo img {
       height: 45px;
-      width: auto;
-      filter: none;
+      max-height: 45px;
+      width: auto !important;
     }
     .nav-contact {
       font-size: 11px;
@@ -174,7 +176,7 @@
     @media (max-width: 700px) {
       .gallery { columns: 2; }
       .hero-logo { width: min(348px, 36vw); }
-      .logo { height: 24px; }
+      .logo img { height: 24px; max-height: 24px; }
     }
 
     /* ═══════════════════════════════════════

@@ -1,22 +1,136 @@
 {
   "photos": [
-    { "file": "images/SHOTBY-BIRKETTOLIVER-00895-5.jpg", "alt": "Portrait" },
-    { "file": "images/3.png", "alt": "Portrait" },
-    { "file": "images/SHOTBY-BIRKETTOLIVER-00891-3.jpg", "alt": "Portrait" },
-    { "file": "images/SHOTBY-BIRKETTOLIVER-00996-2.jpg", "alt": "Portrait" },
-    { "file": "images/SHOTBY-BIRKETTOLIVER-01100.jpg", "alt": "Portrait" },
-    { "file": "images/SHOTBY-BIRKETTOLIVER-01101.jpg", "alt": "Portrait" },
-    { "file": "images/SHOTBY-BIRKETTOLIVER-01247-3.jpg", "alt": "Portrait" },
-    { "file": "images/SHOTBY-BIRKETTOLIVER-000033150038.jpg", "alt": "Portrait" }
+    {
+      "file": "images/SHOTBY-BIRKETTOLIVER-00895-5.jpg",
+      "alt": "Portrait"
+    },
+    {
+      "file": "images/3.png",
+      "alt": "Portrait"
+    },
+    {
+      "file": "images/SHOTBY-BIRKETTOLIVER-00891-3.jpg",
+      "alt": "Portrait"
+    },
+    {
+      "file": "images/SHOTBY-BIRKETTOLIVER-00996-2.jpg",
+      "alt": "Portrait"
+    },
+    {
+      "file": "images/SHOTBY-BIRKETTOLIVER-01100.jpg",
+      "alt": "Portrait"
+    },
+    {
+      "file": "images/SHOTBY-BIRKETTOLIVER-01101.jpg",
+      "alt": "Portrait"
+    },
+    {
+      "file": "images/SHOTBY-BIRKETTOLIVER-01247-3.jpg",
+      "alt": "Portrait"
+    },
+    {
+      "file": "images/SHOTBY-BIRKETTOLIVER-000033150038.jpg",
+      "alt": "Portrait"
+    },
+    {
+      "file": "images/3.jpg"
+    },
+    {
+      "file": "images/5.jpg"
+    },
+    {
+      "file": "images/6.jpg"
+    },
+    {
+      "file": "images/collage-02-02.png"
+    },
+    {
+      "file": "images/dsc00021.jpg"
+    },
+    {
+      "file": "images/dsc07005.jpg"
+    },
+    {
+      "file": "images/dsc08273.jpg"
+    },
+    {
+      "file": "images/dsc09794.jpg"
+    },
+    {
+      "file": "images/dscf8753.jpg"
+    },
+    {
+      "file": "images/dscf8836.jpg"
+    },
+    {
+      "file": "images/untitled-2.jpg"
+    }
   ],
   "photos_mobile": [
-    { "file": "images/SHOTBY-BIRKETTOLIVER-00895-5.jpg", "alt": "Portrait" },
-    { "file": "images/3.png", "alt": "Portrait" },
-    { "file": "images/SHOTBY-BIRKETTOLIVER-00891-3.jpg", "alt": "Portrait" },
-    { "file": "images/SHOTBY-BIRKETTOLIVER-00996-2.jpg", "alt": "Portrait" },
-    { "file": "images/SHOTBY-BIRKETTOLIVER-01100.jpg", "alt": "Portrait" },
-    { "file": "images/SHOTBY-BIRKETTOLIVER-01101.jpg", "alt": "Portrait" },
-    { "file": "images/SHOTBY-BIRKETTOLIVER-01247-3.jpg", "alt": "Portrait" },
-    { "file": "images/SHOTBY-BIRKETTOLIVER-000033150038.jpg", "alt": "Portrait" }
+    {
+      "file": "images/SHOTBY-BIRKETTOLIVER-00895-5.jpg",
+      "alt": "Portrait"
+    },
+    {
+      "file": "images/3.png",
+      "alt": "Portrait"
+    },
+    {
+      "file": "images/SHOTBY-BIRKETTOLIVER-00891-3.jpg",
+      "alt": "Portrait"
+    },
+    {
+      "file": "images/SHOTBY-BIRKETTOLIVER-00996-2.jpg",
+      "alt": "Portrait"
+    },
+    {
+      "file": "images/SHOTBY-BIRKETTOLIVER-01100.jpg",
+      "alt": "Portrait"
+    },
+    {
+      "file": "images/SHOTBY-BIRKETTOLIVER-01101.jpg",
+      "alt": "Portrait"
+    },
+    {
+      "file": "images/SHOTBY-BIRKETTOLIVER-01247-3.jpg",
+      "alt": "Portrait"
+    },
+    {
+      "file": "images/SHOTBY-BIRKETTOLIVER-000033150038.jpg",
+      "alt": "Portrait"
+    },
+    {
+      "file": "images/3.jpg"
+    },
+    {
+      "file": "images/5.jpg"
+    },
+    {
+      "file": "images/6.jpg"
+    },
+    {
+      "file": "images/collage-02-02.png"
+    },
+    {
+      "file": "images/dsc00021.jpg"
+    },
+    {
+      "file": "images/dsc07005.jpg"
+    },
+    {
+      "file": "images/dsc08273.jpg"
+    },
+    {
+      "file": "images/dsc09794.jpg"
+    },
+    {
+      "file": "images/dscf8753.jpg"
+    },
+    {
+      "file": "images/dscf8836.jpg"
+    },
+    {
+      "file": "images/untitled-2.jpg"
+    }
   ]
 }

@@ -50,7 +50,7 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      padding: 2.5rem 2rem 2rem;
+      padding: 2rem 2rem 2rem;
       border-right: 1px solid #e0e0e0;
       overflow: hidden;
     }
@@ -61,7 +61,7 @@
       display: block;
     }
     .bio {
-      margin-top: 2rem;
+      margin-top: 0.75rem;
       font-size: 12px;
       line-height: 1.7;
       color: #444;
@@ -87,8 +87,8 @@
     .scroll-columns {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: var(--gap);
-      padding: var(--gap);
+      gap: 0;
+      padding: 0;
       height: 100%;
     }
 
@@ -100,19 +100,10 @@
     .scroll-track {
       display: flex;
       flex-direction: column;
-      gap: var(--gap);
+      gap: 0;
+      animation-name: scrollUp;
       animation-timing-function: linear;
       animation-iteration-count: infinite;
-    }
-
-    /* Column 1 scrolls upward */
-    .col-1 .scroll-track {
-      animation-name: scrollUp;
-    }
-
-    /* Column 2 scrolls downward (offset feel) */
-    .col-2 .scroll-track {
-      animation-name: scrollDown;
     }
 
     .scroll-track img {
@@ -125,11 +116,6 @@
     @keyframes scrollUp {
       0%   { transform: translateY(0); }
       100% { transform: translateY(-50%); }
-    }
-
-    @keyframes scrollDown {
-      0%   { transform: translateY(-50%); }
-      100% { transform: translateY(0); }
     }
 
     /* ═══════════════════════════════════════
@@ -227,7 +213,7 @@
         // Roughly 300px average image height × number of photos / 2 (duplicated)
         const baseSpeed = left.length * 12;
         setScrollSpeed(col1, baseSpeed);
-        setScrollSpeed(col2, baseSpeed * 1.1); // slight offset for visual interest
+        setScrollSpeed(col2, baseSpeed); // same speed, both scroll up in unison
       })
       .catch(() => {
         col1.innerHTML = '<p style="color:#999;padding:1rem;font-size:11px">No photos found.</p>';

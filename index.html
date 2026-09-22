@@ -7,19 +7,11 @@
   <meta name="description" content="Oliver Birkett — photographer based in London." />
 
   <style>
-    /* ═══════════════════════════════════════
-       TOKENS
-    ═══════════════════════════════════════ */
     :root {
       --black: #000000;
       --white: #ffffff;
-      --grey:  #888;
-      --gap:   4px;
     }
 
-    /* ═══════════════════════════════════════
-       BASE
-    ═══════════════════════════════════════ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; overflow: hidden; }
     body {
@@ -33,9 +25,7 @@
     a { color: inherit; text-decoration: none; }
     img { display: block; }
 
-    /* ═══════════════════════════════════════
-       LAYOUT — split: left third / right two-thirds
-    ═══════════════════════════════════════ */
+    /* ── LAYOUT: left third / right two-thirds ── */
     .page {
       display: grid;
       grid-template-columns: 1fr 2fr;
@@ -43,30 +33,36 @@
       overflow: hidden;
     }
 
-    /* ═══════════════════════════════════════
-       LEFT PANEL
-    ═══════════════════════════════════════ */
+    /* ── LEFT PANEL ── */
     .left-panel {
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-      padding: 2rem 2rem 2rem;
+      align-items: center;
+      justify-content: center;   /* vertically centres the logo */
+      padding: 2rem;
       border-right: 1px solid #e0e0e0;
       overflow: hidden;
+      position: relative;        /* needed for absolute bio */
     }
+
     .brkt-logo {
-      width: 100%;
-      max-width: 260px;
+      width: 80%;
+      max-width: 240px;
       height: auto;
       display: block;
     }
+
+    /* bio pinned to bottom of panel */
     .bio {
-      margin-top: 0.75rem;
+      position: absolute;
+      bottom: 2rem;
+      left: 2rem;
+      right: 2rem;
       font-size: 12px;
       line-height: 1.7;
       color: #444;
       letter-spacing: .01em;
-      max-width: 280px;
+      text-align: center;
     }
     .bio a {
       border-bottom: 1px solid #ccc;
@@ -74,21 +70,16 @@
     }
     .bio a:hover { border-color: var(--black); }
 
-    /* ═══════════════════════════════════════
-       RIGHT PANEL — 2-col infinite scroll
-    ═══════════════════════════════════════ */
+    /* ── RIGHT PANEL ── */
     .right-panel {
       overflow: hidden;
       position: relative;
       height: 100vh;
     }
 
-    /* Two columns side by side, each scrolling independently */
     .scroll-columns {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 0;
-      padding: 0;
       height: 100%;
     }
 
@@ -104,13 +95,13 @@
       animation-name: scrollUp;
       animation-timing-function: linear;
       animation-iteration-count: infinite;
+      will-change: transform;
     }
 
     .scroll-track img {
       width: 100%;
       height: auto;
       display: block;
-      object-fit: cover;
     }
 
     @keyframes scrollUp {
@@ -118,31 +109,23 @@
       100% { transform: translateY(-50%); }
     }
 
-    /* ═══════════════════════════════════════
-       MOBILE — stack layout
-    ═══════════════════════════════════════ */
+    /* ── MOBILE ── */
     @media (max-width: 700px) {
       html, body { overflow: auto; }
-
       .page {
         grid-template-columns: 1fr;
         grid-template-rows: auto 1fr;
         height: auto;
         overflow: visible;
       }
-
       .left-panel {
         border-right: none;
         border-bottom: 1px solid #e0e0e0;
         padding: 1.8rem 1.2rem;
+        min-height: 220px;
       }
-
-      .brkt-logo { max-width: 180px; }
-
-      .right-panel {
-        height: 80vh;
-        overflow: hidden;
-      }
+      .brkt-logo { max-width: 160px; }
+      .right-panel { height: 80vh; }
     }
   </style>
 </head>
@@ -150,24 +133,24 @@
 
   <div class="page">
 
-    <!-- ── LEFT PANEL ── -->
+    <!-- LEFT PANEL -->
     <aside class="left-panel">
       <img class="brkt-logo" src="assets/brkt-logo.png" alt="BRKT" />
       <p class="bio">
-        Placeholder — Oliver's bio text goes here. London-based photographer
-        working across editorial, portrait and commercial. Available for commissions.
-        <br><br>
+        Placeholder — Oliver's bio text goes here.<br>
+        London-based photographer working across<br>
+        editorial, portrait and commercial.<br><br>
         <a href="mailto:hello@birkettoliverphoto.com">Get in touch</a>
       </p>
     </aside>
 
-    <!-- ── RIGHT PANEL — scrolling gallery ── -->
-    <main class="right-panel">
+    <!-- RIGHT PANEL — scrolling gallery -->
+    <main class="right-panel" id="right-panel">
       <div class="scroll-columns">
-        <div class="scroll-col col-1">
+        <div class="scroll-col">
           <div class="scroll-track" id="col1-track"></div>
         </div>
-        <div class="scroll-col col-2">
+        <div class="scroll-col">
           <div class="scroll-track" id="col2-track"></div>
         </div>
       </div>
@@ -176,15 +159,13 @@
   </div>
 
   <script>
-    /* ── Load photos from photos.json and split across 2 columns ── */
     const col1 = document.getElementById('col1-track');
     const col2 = document.getElementById('col2-track');
+    const rightPanel = document.getElementById('right-panel');
     const isMobile = window.innerWidth <= 700;
 
     function buildColumn(el, photos) {
-      // Duplicate photos for seamless infinite loop
-      const doubled = [...photos, ...photos];
-      doubled.forEach(p => {
+      [...photos, ...photos].forEach(p => {
         const img = document.createElement('img');
         img.src = p.file;
         img.alt = p.alt || '';
@@ -193,27 +174,74 @@
       });
     }
 
-    function setScrollSpeed(el, durationSeconds) {
-      el.style.animationDuration = durationSeconds + 's';
-    }
-
     fetch('photos.json')
       .then(r => r.json())
       .then(data => {
         const allPhotos = isMobile && data.photos_mobile ? data.photos_mobile : data.photos;
-
-        // Split photos alternately between the two columns
         const left  = allPhotos.filter((_, i) => i % 2 === 0);
         const right = allPhotos.filter((_, i) => i % 2 !== 0);
 
         buildColumn(col1, left);
         buildColumn(col2, right);
 
-        // Speed: ~1px per 8ms feel. More photos = longer duration.
-        // Roughly 300px average image height × number of photos / 2 (duplicated)
-        const baseSpeed = left.length * 12;
-        setScrollSpeed(col1, baseSpeed);
-        setScrollSpeed(col2, baseSpeed); // same speed, both scroll up in unison
+        const duration = left.length * 12; // seconds per full loop
+        col1.style.animationDuration = duration + 's';
+        col2.style.animationDuration = duration + 's';
+
+        // ── Wheel scroll: scrub through photos without scrolling the page ──
+        let trackHeight = 0;
+        let offset = 0;
+        let paused = false;
+        let resumeTimer = null;
+
+        // Measure once images have started loading
+        setTimeout(() => {
+          trackHeight = col1.scrollHeight / 2;
+        }, 500);
+        window.addEventListener('load', () => {
+          trackHeight = col1.scrollHeight / 2;
+        });
+
+        function getAnimY(el) {
+          const m = new DOMMatrix(window.getComputedStyle(el).transform);
+          return m.m42;
+        }
+
+        rightPanel.addEventListener('wheel', e => {
+          e.preventDefault(); // stop the page from scrolling
+
+          if (!paused) {
+            offset = getAnimY(col1);
+            col1.style.animationPlayState = 'paused';
+            col2.style.animationPlayState = 'paused';
+            paused = true;
+          }
+
+          offset -= e.deltaY * 0.6;
+
+          // Wrap so it loops seamlessly
+          if (trackHeight > 0) {
+            offset = ((offset % trackHeight) - trackHeight) % trackHeight;
+          }
+
+          col1.style.transform = `translateY(${offset}px)`;
+          col2.style.transform = `translateY(${offset}px)`;
+
+          // Resume auto-scroll 2s after last wheel event
+          clearTimeout(resumeTimer);
+          resumeTimer = setTimeout(() => {
+            const pct = Math.abs(offset) / (trackHeight || 1);
+            const elapsed = pct * duration;
+            col1.style.animationDelay = `-${elapsed}s`;
+            col2.style.animationDelay = `-${elapsed}s`;
+            col1.style.transform = '';
+            col2.style.transform = '';
+            col1.style.animationPlayState = 'running';
+            col2.style.animationPlayState = 'running';
+            paused = false;
+          }, 2000);
+
+        }, { passive: false });
       })
       .catch(() => {
         col1.innerHTML = '<p style="color:#999;padding:1rem;font-size:11px">No photos found.</p>';

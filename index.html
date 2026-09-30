@@ -207,11 +207,13 @@
     const isMobile = window.innerWidth <= 700;
 
     function buildColumn(el, photos, doubled) {
-      (doubled ? [...photos, ...photos] : photos).forEach(p => {
+      const list = doubled ? [...photos, ...photos] : photos;
+      list.forEach((p, i) => {
         const img = document.createElement('img');
         img.src = p.file;
         img.alt = p.alt || '';
-        img.loading = 'lazy';
+        // load first few eagerly so height is known before scroll starts
+        img.loading = i < 6 ? 'eager' : 'lazy';
         el.appendChild(img);
       });
     }
@@ -227,32 +229,42 @@
         buildColumn(col2, right, !isMobile);
 
         if (!isMobile) {
-          let y = 0;
-          let speed = 0.2;
+          // Each column scrolls independently so different heights don't cause glitches
+          let y1 = 0, y2 = 0;
+          const speed = 0.2;
           let wheelVelocity = 0;
-          let trackHeight = 0;
           let autoScrolling = true;
           let idleTimer = null;
 
-          function apply() {
-            const ty = `translateY(${y}px)`;
-            col1.style.transform = ty;
-            col2.style.transform = ty;
+          function getTrackHeight(el) {
+            // height of one copy = total / 2 (images are doubled)
+            return el.scrollHeight / 2;
+          }
+
+          function wrap(y, h) {
+            if (h <= 0) return y;
+            return ((y % h) - h) % h;
           }
 
           function loop() {
-            if (col1.scrollHeight > 0) trackHeight = col1.scrollHeight / 2;
+            const h1 = getTrackHeight(col1);
+            const h2 = getTrackHeight(col2);
 
-            if (trackHeight > 0) {
-              if (autoScrolling) {
-                y -= speed;
-              } else if (Math.abs(wheelVelocity) > 0.1) {
-                y += wheelVelocity;
-                wheelVelocity *= 0.92;
-              }
-              y = ((y % trackHeight) - trackHeight) % trackHeight;
-              apply();
+            if (autoScrolling) {
+              y1 -= speed;
+              y2 -= speed;
+            } else if (Math.abs(wheelVelocity) > 0.01) {
+              y1 += wheelVelocity;
+              y2 += wheelVelocity;
+              wheelVelocity *= 0.92;
             }
+
+            y1 = wrap(y1, h1);
+            y2 = wrap(y2, h2);
+
+            col1.style.transform = `translateY(${y1}px)`;
+            col2.style.transform = `translateY(${y2}px)`;
+
             requestAnimationFrame(loop);
           }
           requestAnimationFrame(loop);
@@ -269,7 +281,6 @@
             }, 2000);
           }, { passive: false });
         }
-
 
       })
       .catch(() => {

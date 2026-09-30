@@ -120,24 +120,50 @@
       display: block;
     }
 
+    /* ── MOBILE FOOTER ── */
+    .mobile-footer {
+      display: none;
+    }
+
     /* ── MOBILE ── */
     @media (max-width: 700px) {
-      html, body { overflow: hidden; height: 100%; }
+      html, body { overflow: auto; height: auto; }
       .page {
         grid-template-columns: 1fr;
-        grid-template-rows: auto 1fr;
-        height: 100vh;
-        overflow: hidden;
+        grid-template-rows: auto auto auto;
+        height: auto;
+        overflow: visible;
       }
       .left-panel {
         border-right: none;
         border-bottom: 1px solid #e0e0e0;
-        min-height: 200px;
-        height: 200px;
+        min-height: 160px;
+        height: 160px;
       }
-      .left-footer { bottom: 1.5rem; }
+      .left-footer { display: none; }
       .brkt-logo { max-width: 120px; }
-      .right-panel { height: calc(100vh - 200px); }
+      .right-panel {
+        height: auto;
+        overflow: visible;
+      }
+      .scroll-columns {
+        height: auto;
+      }
+      .scroll-col {
+        overflow: visible;
+      }
+      .scroll-track {
+        transform: none !important;
+      }
+      .mobile-footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 2rem 1.5rem;
+        border-top: 1px solid #e0e0e0;
+        text-align: center;
+      }
     }
   </style>
 </head>
@@ -166,6 +192,12 @@
       </div>
     </main>
 
+    <!-- MOBILE FOOTER -->
+    <footer class="mobile-footer">
+      <p class="bio">Oliver Birkett is a photographer based in London.</p>
+      <a class="insta-link" href="https://instagram.com/_birkettoliver" target="_blank" rel="noopener">@_birkettoliver</a>
+    </footer>
+
   </div>
 
   <script>
@@ -174,8 +206,8 @@
     const rightPanel = document.getElementById('right-panel');
     const isMobile = window.innerWidth <= 700;
 
-    function buildColumn(el, photos) {
-      [...photos, ...photos].forEach(p => {
+    function buildColumn(el, photos, doubled) {
+      (doubled ? [...photos, ...photos] : photos).forEach(p => {
         const img = document.createElement('img');
         img.src = p.file;
         img.alt = p.alt || '';
@@ -191,84 +223,53 @@
         const left  = allPhotos.filter((_, i) => i % 2 === 0);
         const right = allPhotos.filter((_, i) => i % 2 !== 0);
 
-        buildColumn(col1, left);
-        buildColumn(col2, right);
+        buildColumn(col1, left, !isMobile);
+        buildColumn(col2, right, !isMobile);
 
-        let y = 0;
-        let speed = 0.2;
-        let wheelVelocity = 0;
-        let trackHeight = 0;
-        let autoScrolling = true;
-        let idleTimer = null;
+        if (!isMobile) {
+          let y = 0;
+          let speed = 0.2;
+          let wheelVelocity = 0;
+          let trackHeight = 0;
+          let autoScrolling = true;
+          let idleTimer = null;
 
-        function apply() {
-          const ty = `translateY(${y}px)`;
-          col1.style.transform = ty;
-          col2.style.transform = ty;
-        }
+          function apply() {
+            const ty = `translateY(${y}px)`;
+            col1.style.transform = ty;
+            col2.style.transform = ty;
+          }
 
-        function loop() {
-          if (col1.scrollHeight > 0) trackHeight = col1.scrollHeight / 2;
+          function loop() {
+            if (col1.scrollHeight > 0) trackHeight = col1.scrollHeight / 2;
 
-          if (trackHeight > 0) {
-            if (autoScrolling) {
-              y -= speed;
-            } else if (Math.abs(wheelVelocity) > 0.1) {
-              y += wheelVelocity;
-              wheelVelocity *= 0.92;
+            if (trackHeight > 0) {
+              if (autoScrolling) {
+                y -= speed;
+              } else if (Math.abs(wheelVelocity) > 0.1) {
+                y += wheelVelocity;
+                wheelVelocity *= 0.92;
+              }
+              y = ((y % trackHeight) - trackHeight) % trackHeight;
+              apply();
             }
-            y = ((y % trackHeight) - trackHeight) % trackHeight;
-            apply();
+            requestAnimationFrame(loop);
           }
           requestAnimationFrame(loop);
+
+          rightPanel.addEventListener('wheel', e => {
+            e.preventDefault();
+            autoScrolling = false;
+            wheelVelocity = -e.deltaY * 0.15;
+
+            clearTimeout(idleTimer);
+            idleTimer = setTimeout(() => {
+              wheelVelocity = 0;
+              autoScrolling = true;
+            }, 2000);
+          }, { passive: false });
         }
-        requestAnimationFrame(loop);
 
-        rightPanel.addEventListener('wheel', e => {
-          e.preventDefault();
-          autoScrolling = false;
-          wheelVelocity = -e.deltaY * 0.15;
-
-          clearTimeout(idleTimer);
-          idleTimer = setTimeout(() => {
-            wheelVelocity = 0;
-            autoScrolling = true;
-          }, 2000);
-        }, { passive: false });
-
-        // ── Touch scroll (mobile) ──
-        let touchStartY = 0;
-        let lastTouchY = 0;
-
-        rightPanel.addEventListener('touchstart', e => {
-          touchStartY = e.touches[0].clientY;
-          lastTouchY = touchStartY;
-          autoScrolling = false;
-          wheelVelocity = 0;
-          clearTimeout(idleTimer);
-        }, { passive: true });
-
-        rightPanel.addEventListener('touchmove', e => {
-          e.preventDefault();
-          const currentY = e.touches[0].clientY;
-          const delta = currentY - lastTouchY;
-          lastTouchY = currentY;
-          y += delta;
-          if (trackHeight > 0) {
-            y = ((y % trackHeight) - trackHeight) % trackHeight;
-          }
-          apply();
-        }, { passive: false });
-
-        rightPanel.addEventListener('touchend', e => {
-          // carry momentum from last swipe delta
-          const delta = lastTouchY - touchStartY;
-          wheelVelocity = (lastTouchY - e.changedTouches[0].clientY) * -0.3;
-          idleTimer = setTimeout(() => {
-            wheelVelocity = 0;
-            autoScrolling = true;
-          }, 1500);
-        }, { passive: true });
 
       })
       .catch(() => {

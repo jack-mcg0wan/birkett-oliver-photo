@@ -122,20 +122,22 @@
 
     /* ── MOBILE ── */
     @media (max-width: 700px) {
-      html, body { overflow: auto; }
+      html, body { overflow: hidden; height: 100%; }
       .page {
         grid-template-columns: 1fr;
         grid-template-rows: auto 1fr;
-        height: auto;
-        overflow: visible;
+        height: 100vh;
+        overflow: hidden;
       }
       .left-panel {
         border-right: none;
         border-bottom: 1px solid #e0e0e0;
-        min-height: 260px;
+        min-height: 200px;
+        height: 200px;
       }
-      .brkt-logo { max-width: 160px; }
-      .right-panel { height: 80vh; }
+      .left-footer { bottom: 1.5rem; }
+      .brkt-logo { max-width: 120px; }
+      .right-panel { height: calc(100vh - 200px); }
     }
   </style>
 </head>
@@ -233,6 +235,40 @@
             autoScrolling = true;
           }, 2000);
         }, { passive: false });
+
+        // ── Touch scroll (mobile) ──
+        let touchStartY = 0;
+        let lastTouchY = 0;
+
+        rightPanel.addEventListener('touchstart', e => {
+          touchStartY = e.touches[0].clientY;
+          lastTouchY = touchStartY;
+          autoScrolling = false;
+          wheelVelocity = 0;
+          clearTimeout(idleTimer);
+        }, { passive: true });
+
+        rightPanel.addEventListener('touchmove', e => {
+          e.preventDefault();
+          const currentY = e.touches[0].clientY;
+          const delta = currentY - lastTouchY;
+          lastTouchY = currentY;
+          y += delta;
+          if (trackHeight > 0) {
+            y = ((y % trackHeight) - trackHeight) % trackHeight;
+          }
+          apply();
+        }, { passive: false });
+
+        rightPanel.addEventListener('touchend', e => {
+          // carry momentum from last swipe delta
+          const delta = lastTouchY - touchStartY;
+          wheelVelocity = (lastTouchY - e.changedTouches[0].clientY) * -0.3;
+          idleTimer = setTimeout(() => {
+            wheelVelocity = 0;
+            autoScrolling = true;
+          }, 1500);
+        }, { passive: true });
 
       })
       .catch(() => {

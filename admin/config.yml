@@ -36,6 +36,11 @@ collections:
                 widget: "string"
                 hint: "Brief description (used for accessibility)"
                 required: false
+              - label: "Size"
+                name: "size"
+                widget: "select"
+                options: [{label: "Normal", value: ""}, {label: "Small", value: "small"}]
+                required: false
           - label: "Mobile Photos"
             name: "photos_mobile"
             widget: "list"
@@ -49,6 +54,11 @@ collections:
                 name: "alt"
                 widget: "string"
                 hint: "Brief description (used for accessibility)"
+                required: false
+              - label: "Size"
+                name: "size"
+                widget: "select"
+                options: [{label: "Normal", value: ""}, {label: "Small", value: "small"}]
                 required: false
 
   - name: "settings"

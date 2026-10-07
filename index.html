@@ -120,6 +120,12 @@
       display: block;
     }
 
+    /* Smaller photos (set "size": "small" in photos.json) */
+    .scroll-track img.small {
+      width: 55%;
+      margin: 0 auto;
+    }
+
     /* ── MOBILE FOOTER ── */
     .mobile-footer {
       display: none;
@@ -212,6 +218,7 @@
         const img = document.createElement('img');
         img.src = p.file;
         img.alt = p.alt || '';
+        if (p.size) img.classList.add(p.size);
         // load first few eagerly so height is known before scroll starts
         img.loading = i < 6 ? 'eager' : 'lazy';
         el.appendChild(img);

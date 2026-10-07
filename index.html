@@ -302,6 +302,26 @@
           rightPanel.style.opacity = '1';
         });
 
+        // Mobile: make both columns end level (stretch the last photo of the shorter column slightly)
+        if (isMobile) {
+          const all = [...document.querySelectorAll('.scroll-track img')];
+          Promise.all(all.map(img => { img.loading = 'eager'; return img.complete ? null :
+            new Promise(r => { img.addEventListener('load', r); img.addEventListener('error', r); }); }))
+            .then(() => {
+              const level = () => {
+                [col1, col2].forEach(c => { const l = c.lastElementChild; if (l) { l.style.height = ''; l.style.objectFit = ''; } });
+                const gap = col1.offsetHeight - col2.offsetHeight;
+                const shorter = gap > 0 ? col2 : col1;
+                const last = shorter.lastElementChild;
+                if (!last || Math.abs(gap) < 1 || Math.abs(gap) > last.offsetHeight * 0.25) return;
+                last.style.height = (last.offsetHeight + Math.abs(gap)) + 'px';
+                last.style.objectFit = 'cover';
+              };
+              level();
+              window.addEventListener('resize', level);
+            });
+        }
+
         if (!isMobile) ready.then(() => {
           // Each column scrolls independently so different heights don't cause glitches
           let y1 = -startOffset, y2 = -startOffset;

@@ -166,6 +166,10 @@
       .scroll-track {
         transform: none !important;
       }
+      .mobile-hero {
+        width: 100%;
+        height: auto;
+      }
       .mobile-footer {
         display: flex;
         flex-direction: column;
@@ -252,7 +256,18 @@
     fetch('photos.json')
       .then(r => r.json())
       .then(data => {
-        const allPhotos = isMobile && data.photos_mobile ? data.photos_mobile : data.photos;
+        let allPhotos = isMobile && data.photos_mobile ? data.photos_mobile : data.photos;
+
+        // Mobile: the "start" photo (the eye) sits full width at the top, then the grid below
+        if (isMobile) {
+          const hero = allPhotos.find(p => p.start);
+          if (hero) {
+            allPhotos = allPhotos.filter(p => p !== hero);
+            const img = makeImg({ file: hero.file, alt: hero.alt }, true);
+            img.className = 'mobile-hero';
+            rightPanel.insertBefore(img, rightPanel.firstChild);
+          }
+        }
         const left  = allPhotos.filter((_, i) => i % 2 === 0);
         const right = allPhotos.filter((_, i) => i % 2 !== 0);
 

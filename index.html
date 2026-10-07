@@ -120,10 +120,15 @@
       display: block;
     }
 
-    /* Smaller photos (set "size": "small" in photos.json) */
-    .scroll-track img.small {
-      width: 55%;
-      margin: 0 auto;
+    /* Small photos: two or more sit side by side in one row, scaled to the same height (no cropping, no gaps) */
+    .scroll-track .pair {
+      display: flex;
+    }
+    .scroll-track .pair img {
+      flex: 1 1 0;
+      min-width: 0;
+      width: auto;
+      height: auto;
     }
 
     /* ── MOBILE FOOTER ── */
@@ -212,17 +217,35 @@
     const rightPanel = document.getElementById('right-panel');
     const isMobile = window.innerWidth <= 700;
 
+    function makeImg(p, eager) {
+      const img = document.createElement('img');
+      img.src = p.file;
+      img.alt = p.alt || '';
+      img.loading = eager ? 'eager' : 'lazy';
+      return img;
+    }
+
     function buildColumn(el, photos, doubled) {
       const list = doubled ? [...photos, ...photos] : photos;
-      list.forEach((p, i) => {
-        const img = document.createElement('img');
-        img.src = p.file;
-        img.alt = p.alt || '';
-        if (p.size) img.classList.add(p.size);
+      for (let i = 0; i < list.length; i++) {
+        const p = list[i];
+        // a run of "small" photos in the same column shares one row
+        if (p.size === 'small' && list[i + 1] && list[i + 1].size === 'small') {
+          const row = document.createElement('div');
+          row.className = 'pair';
+          while (i < list.length && list[i].size === 'small') {
+            const img = makeImg(list[i], true);
+            img.onload = () => { img.style.flexGrow = img.naturalWidth / img.naturalHeight; };
+            row.appendChild(img);
+            i++;
+          }
+          el.appendChild(row);
+          i--;
+          continue;
+        }
         // load first few eagerly so height is known before scroll starts
-        img.loading = i < 6 ? 'eager' : 'lazy';
-        el.appendChild(img);
-      });
+        el.appendChild(makeImg(p, i < 6));
+      }
     }
 
     fetch('photos.json')

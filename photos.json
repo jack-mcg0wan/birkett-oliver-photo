@@ -22,10 +22,11 @@
       "file": "images/dsc09794.jpg"
     },
     {
-      "file": "images/tunnel-lean.jpg"
+      "file": "images/brkt-eye-1.jpg",
+      "start": true
     },
     {
-      "file": "images/brkt-eye-1.jpg"
+      "file": "images/tunnel-lean.jpg"
     },
     {
       "file": "images/england-kit-sunglasses.jpg"
@@ -35,23 +36,11 @@
       "alt": "Portrait"
     },
     {
-      "file": "images/bw-sunglasses-portrait.jpg",
-      "size": "small"
-    },
-    {
       "file": "images/SHOTBY-BIRKETTOLIVER-01247-3.jpg",
       "alt": "Portrait"
     },
     {
-      "file": "images/dsc07005.jpg",
-      "size": "small"
-    },
-    {
       "file": "images/tunnel-hair-spin.jpg"
-    },
-    {
-      "file": "images/5.jpg",
-      "size": "small"
     },
     {
       "file": "images/collage-02-02.jpg"
@@ -122,10 +111,11 @@
       "file": "images/dsc09794.jpg"
     },
     {
-      "file": "images/tunnel-lean.jpg"
+      "file": "images/brkt-eye-1.jpg",
+      "start": true
     },
     {
-      "file": "images/brkt-eye-1.jpg"
+      "file": "images/tunnel-lean.jpg"
     },
     {
       "file": "images/england-kit-sunglasses.jpg"
@@ -135,23 +125,11 @@
       "alt": "Portrait"
     },
     {
-      "file": "images/bw-sunglasses-portrait.jpg",
-      "size": "small"
-    },
-    {
       "file": "images/SHOTBY-BIRKETTOLIVER-01247-3.jpg",
       "alt": "Portrait"
     },
     {
-      "file": "images/dsc07005.jpg",
-      "size": "small"
-    },
-    {
       "file": "images/tunnel-hair-spin.jpg"
-    },
-    {
-      "file": "images/5.jpg",
-      "size": "small"
     },
     {
       "file": "images/collage-02-02.jpg"

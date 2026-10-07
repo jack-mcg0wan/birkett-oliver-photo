@@ -222,6 +222,7 @@
       img.src = p.file;
       img.alt = p.alt || '';
       img.loading = eager ? 'eager' : 'lazy';
+      if (p.start) img.dataset.start = '1';
       return img;
     }
 
@@ -258,9 +259,37 @@
         buildColumn(col1, left, !isMobile);
         buildColumn(col2, right, !isMobile);
 
-        if (!isMobile) {
+        // Open the gallery at the photo marked "start" in photos.json (the blue BRKT eye)
+        const startImg = document.querySelector('.scroll-track img[data-start]');
+        let startOffset = 0;
+        const ready = new Promise(resolve => {
+          if (!startImg) return resolve();
+          rightPanel.style.opacity = '0';
+          const track = startImg.closest('.scroll-track');
+          const imgs = [...track.querySelectorAll('img')];
+          const before = imgs.slice(0, imgs.indexOf(startImg) + 1);
+          before.forEach(img => { img.loading = 'eager'; });
+          Promise.all(before.map(img => img.complete ? null :
+            new Promise(r => { img.addEventListener('load', r); img.addEventListener('error', r); })))
+            .then(resolve);
+          setTimeout(resolve, 4000); // never wait forever
+        }).then(() => {
+          if (startImg) {
+            const viewH = isMobile ? window.innerHeight : rightPanel.clientHeight;
+            if (isMobile) {
+              const top = startImg.getBoundingClientRect().top + window.scrollY;
+              window.scrollTo(0, Math.max(0, top - (viewH - startImg.offsetHeight) / 2));
+            } else {
+              startOffset = Math.max(0, startImg.offsetTop - (viewH - startImg.offsetHeight) / 2);
+            }
+          }
+          rightPanel.style.transition = 'opacity .4s';
+          rightPanel.style.opacity = '1';
+        });
+
+        if (!isMobile) ready.then(() => {
           // Each column scrolls independently so different heights don't cause glitches
-          let y1 = 0, y2 = 0;
+          let y1 = -startOffset, y2 = -startOffset;
           const speed = 0.2;
           let wheelVelocity = 0;
           let autoScrolling = true;
@@ -310,7 +339,7 @@
               autoScrolling = true;
             }, 2000);
           }, { passive: false });
-        }
+        });
 
       })
       .catch(() => {

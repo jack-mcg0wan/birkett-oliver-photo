@@ -102,8 +102,16 @@
     .social-links a:last-child { justify-self: start; }
     .social-links a {
       border: 1px solid #000;
-      padding: .3em .6em;
       line-height: 1;
+      /* capitals have no descenders, so add a little more space on top to look even */
+      padding: .42em .6em .28em;
+    }
+    @supports (text-box: trim-both cap alphabetic) {
+      /* modern browsers: trim the text box to the capital letters so padding is exactly even */
+      .social-links a {
+        text-box: trim-both cap alphabetic;
+        padding: .45em .6em;
+      }
     }
     .social-links a:hover {
       background: #000;

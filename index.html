@@ -89,6 +89,28 @@
       opacity: 0.5;
     }
 
+    /* Instagram · Contact · TikTok row */
+    .social-links {
+      /* 3 columns: Contact sits in the exact centre whatever the side words' lengths */
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: .6rem;
+      width: 100%;
+    }
+    .social-links a:first-child { justify-self: end; }
+    .social-links a:last-child { justify-self: start; }
+    .social-links a {
+      border: 1px solid #000;
+      padding: .3em .6em;
+      line-height: 1;
+    }
+    .social-links a:hover {
+      background: #000;
+      color: #fff;
+      opacity: 1;
+    }
+
     /* ── RIGHT PANEL ── */
     .right-panel {
       overflow: hidden;
@@ -191,7 +213,11 @@
       <img class="brkt-logo" src="assets/brkt-logo.png" alt="BRKT" />
       <div class="left-footer">
         <p class="bio">Oliver Birkett is a photographer based in London.</p>
-        <a class="insta-link" href="https://instagram.com/_birkettoliver" target="_blank" rel="noopener">@_birkettoliver</a>
+        <nav class="social-links">
+        <a class="insta-link" href="https://instagram.com/_birkettoliver" target="_blank" rel="noopener" >Instagram</a>
+        <a class="insta-link" href="mailto:contact@birkettoliver.com">Contact</a>
+        <a class="insta-link" href="https://www.tiktok.com/@birkettoliver" target="_blank" rel="noopener" >TikTok</a>
+      </nav>
       </div>
     </aside>
 
@@ -210,7 +236,11 @@
     <!-- MOBILE FOOTER -->
     <footer class="mobile-footer">
       <p class="bio">Oliver Birkett is a photographer based in London.</p>
-      <a class="insta-link" href="https://instagram.com/_birkettoliver" target="_blank" rel="noopener">@_birkettoliver</a>
+      <nav class="social-links">
+        <a class="insta-link" href="https://instagram.com/_birkettoliver" target="_blank" rel="noopener" >Instagram</a>
+        <a class="insta-link" href="mailto:contact@birkettoliver.com">Contact</a>
+        <a class="insta-link" href="https://www.tiktok.com/@birkettoliver" target="_blank" rel="noopener" >TikTok</a>
+      </nav>
     </footer>
 
   </div>

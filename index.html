@@ -305,9 +305,18 @@
             img.className = 'mobile-hero';
             rightPanel.insertBefore(img, rightPanel.firstChild);
           }
+          // photos marked "wide" span both columns at the bottom of the grid
+          allPhotos.filter(p => p.wide).forEach(p => {
+            const img = makeImg({ file: p.file, alt: p.alt }, true);
+            img.className = 'mobile-hero';
+            rightPanel.appendChild(img);
+          });
+          allPhotos = allPhotos.filter(p => !p.wide);
         }
-        const left  = allPhotos.filter((_, i) => i % 2 === 0);
-        const right = allPhotos.filter((_, i) => i % 2 !== 0);
+        // photos can be pinned to a column with "col": "L" / "R" (used on mobile to keep both columns level)
+        const pinned = allPhotos.some(p => p.col);
+        const left  = pinned ? allPhotos.filter(p => p.col !== 'R') : allPhotos.filter((_, i) => i % 2 === 0);
+        const right = pinned ? allPhotos.filter(p => p.col === 'R') : allPhotos.filter((_, i) => i % 2 !== 0);
 
         buildColumn(col1, left, !isMobile);
         buildColumn(col2, right, !isMobile);

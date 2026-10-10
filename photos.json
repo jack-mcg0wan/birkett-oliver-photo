@@ -9,7 +9,7 @@
       "alt": "Portrait"
     },
     {
-      "file": "images/tunnel-hands-in-hair.jpg"
+      "file": "images/tunnel-hands-in-hair-v2.jpg"
     },
     {
       "file": "images/SHOTBY-BIRKETTOLIVER-01100.jpg",
@@ -26,7 +26,7 @@
       "start": true
     },
     {
-      "file": "images/tunnel-lean.jpg"
+      "file": "images/tunnel-lean-v2.jpg"
     },
     {
       "file": "images/england-kit-sunglasses.jpg"
@@ -36,7 +36,7 @@
       "alt": "Portrait"
     },
     {
-      "file": "images/tunnel-hair-spin.jpg"
+      "file": "images/tunnel-hair-spin-v2.jpg"
     },
     {
       "file": "images/collage-02-02.jpg"
@@ -69,6 +69,9 @@
     },
     {
       "file": "images/blue-blur-hand.jpg"
+    },
+    {
+      "file": "images/tunnel-arms-up.jpg"
     },
     {
       "file": "images/DSC05735-3.jpg"
@@ -94,7 +97,7 @@
       "alt": "Portrait"
     },
     {
-      "file": "images/tunnel-hands-in-hair.jpg"
+      "file": "images/tunnel-hands-in-hair-v2.jpg"
     },
     {
       "file": "images/SHOTBY-BIRKETTOLIVER-01100.jpg",
@@ -114,14 +117,14 @@
       "file": "images/england-kit-sunglasses.jpg"
     },
     {
-      "file": "images/tunnel-lean.jpg"
+      "file": "images/tunnel-lean-v2.jpg"
     },
     {
       "file": "images/SHOTBY-BIRKETTOLIVER-01247-3.jpg",
       "alt": "Portrait"
     },
     {
-      "file": "images/tunnel-hair-spin.jpg"
+      "file": "images/tunnel-hair-spin-v2.jpg"
     },
     {
       "file": "images/collage-02-02.jpg"
@@ -167,6 +170,10 @@
     },
     {
       "file": "images/untitled-2.jpg"
+    },
+    {
+      "file": "images/tunnel-arms-up.jpg",
+      "wide": true
     }
   ]
 }

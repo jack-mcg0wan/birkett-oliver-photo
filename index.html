@@ -3,8 +3,44 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BRKT — Photography</title>
-  <meta name="description" content="Oliver Birkett — photographer based in London." />
+  <title>Oliver Birkett (BRKT) — Fashion &amp; Portrait Photographer, London</title>
+  <meta name="description" content="Oliver Birkett (BRKT) is a London-based fashion, portrait and editorial photographer. View the portfolio and get in touch for shoots and commissions." />
+  <link rel="canonical" href="https://birkettoliver.com/" />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Oliver Birkett" />
+
+  <!-- link previews (WhatsApp, iMessage, Instagram, X) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="BRKT — Oliver Birkett" />
+  <meta property="og:title" content="Oliver Birkett (BRKT) — Photographer, London" />
+  <meta property="og:description" content="Fashion, portrait and editorial photography by Oliver Birkett." />
+  <meta property="og:url" content="https://birkettoliver.com/" />
+  <meta property="og:image" content="https://birkettoliver.com/images/brkt-eye-1.jpg" />
+  <meta property="og:image:alt" content="Blue-toned close-up of an eye with BRKT on the iris" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Oliver Birkett (BRKT) — Photographer, London" />
+  <meta name="twitter:description" content="Fashion, portrait and editorial photography by Oliver Birkett." />
+  <meta name="twitter:image" content="https://birkettoliver.com/images/brkt-eye-1.jpg" />
+
+  <!-- tells Google who this site is about -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Oliver Birkett",
+    "alternateName": "BRKT",
+    "jobTitle": "Photographer",
+    "description": "London-based fashion, portrait and editorial photographer.",
+    "url": "https://birkettoliver.com/",
+    "image": "https://birkettoliver.com/images/brkt-eye-1.jpg",
+    "email": "mailto:contact@birkettoliver.com",
+    "address": { "@type": "PostalAddress", "addressLocality": "London", "addressCountry": "GB" },
+    "sameAs": [
+      "https://instagram.com/_birkettoliver",
+      "https://www.tiktok.com/@birkettoliver"
+    ]
+  }
+  </script>
 
   <style>
     :root {
@@ -192,6 +228,16 @@
       }
       .scroll-col {
         overflow: visible;
+        display: flex;
+        flex-direction: column;
+      }
+      /* both columns end exactly level: the last photo in each column absorbs any leftover pixels */
+      .scroll-track {
+        flex: 1;
+      }
+      .scroll-track > img:last-child {
+        flex: 1 1 auto;
+        object-fit: cover;
       }
       .scroll-track {
         transform: none !important;
@@ -218,9 +264,9 @@
 
     <!-- LEFT PANEL -->
     <aside class="left-panel">
-      <img class="brkt-logo" src="assets/brkt-logo.png" alt="BRKT" />
+      <img class="brkt-logo" src="assets/brkt-logo.png" alt="BRKT — Oliver Birkett Photography" />
       <div class="left-footer">
-        <p class="bio">Oliver Birkett is a photographer based in London.</p>
+        <h1 class="bio">Oliver Birkett is a photographer based in London.</h1>
         <nav class="social-links">
         <a class="insta-link" href="https://instagram.com/_birkettoliver" target="_blank" rel="noopener" >Instagram</a>
         <a class="insta-link" href="mailto:contact@birkettoliver.com">Contact</a>
@@ -349,25 +395,6 @@
           rightPanel.style.opacity = '1';
         });
 
-        // Mobile: make both columns end level (stretch the last photo of the shorter column slightly)
-        if (isMobile) {
-          const all = [...document.querySelectorAll('.scroll-track img')];
-          Promise.all(all.map(img => { img.loading = 'eager'; return img.complete ? null :
-            new Promise(r => { img.addEventListener('load', r); img.addEventListener('error', r); }); }))
-            .then(() => {
-              const level = () => {
-                [col1, col2].forEach(c => { const l = c.lastElementChild; if (l) { l.style.height = ''; l.style.objectFit = ''; } });
-                const gap = col1.offsetHeight - col2.offsetHeight;
-                const shorter = gap > 0 ? col2 : col1;
-                const last = shorter.lastElementChild;
-                if (!last || Math.abs(gap) < 1 || Math.abs(gap) > last.offsetHeight * 0.25) return;
-                last.style.height = (last.offsetHeight + Math.abs(gap)) + 'px';
-                last.style.objectFit = 'cover';
-              };
-              level();
-              window.addEventListener('resize', level);
-            });
-        }
 
         if (!isMobile) ready.then(() => {
           // Each column scrolls independently so different heights don't cause glitches
